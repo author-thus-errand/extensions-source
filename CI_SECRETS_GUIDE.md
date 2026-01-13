@@ -191,6 +191,12 @@ After adding the secrets, you can test them by:
 ### Build fails with "signingkey.jks not found"
 - Ensure `SIGNING_KEY` is properly base64 encoded
 - Verify the secret is added to the repository (check Settings → Secrets)
+- Make sure the base64 string has no newlines (use `base64 -w 0` on Linux or plain `base64` output as-is)
+
+### Build fails with "command not found" when decoding SIGNING_KEY
+- This usually means the workflow script needs the secret value quoted
+- The workflow has been updated to properly quote the secret value
+- Ensure the secret exists and is not empty
 
 ### Build fails with "keystore password was incorrect"
 - Double-check your `KEY_STORE_PASSWORD` matches the password used when creating the keystore
