@@ -84,11 +84,14 @@ jobs:
           cache-read-only: ${{ matrix.chunk.number > 1 }}
 
       - name: Prepare signing key
+        env:
+          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
         run: |
-          if [ -n "${{ secrets.SIGNING_KEY }}" ]; then
-            echo "${{ secrets.SIGNING_KEY }}" | base64 -d > signingkey.jks
+          if [ -n "$SIGNING_KEY" ]; then
+            echo "$SIGNING_KEY" | base64 -d > signingkey.jks
           else
-            # Create a dummy keystore for forks/dev builds
+            # Create a dummy debug keystore for forks/dev builds
+            # Using standard Android debug keystore credentials
             keytool -genkeypair -keystore signingkey.jks -alias androiddebugkey \
               -keyalg RSA -keysize 2048 -validity 10000 -storepass android \
               -keypass android -dname "CN=Android Debug,O=Android,C=US"
