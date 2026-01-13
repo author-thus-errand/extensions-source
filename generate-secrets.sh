@@ -39,14 +39,22 @@ if [ "$KEYSTORE_PASSWORD" != "$KEYSTORE_PASSWORD_CONFIRM" ]; then
     exit 1
 fi
 
-read -sp "Enter key password (can be same as keystore password): " KEY_PASSWORD
 echo ""
-read -sp "Confirm key password: " KEY_PASSWORD_CONFIRM
+echo "Note: By default, keytool uses the same password for both keystore and key."
+echo "Press Enter to use the same password, or enter a different key password:"
+read -sp "Enter key password (leave blank for same as keystore): " KEY_PASSWORD
 echo ""
 
-if [ "$KEY_PASSWORD" != "$KEY_PASSWORD_CONFIRM" ]; then
-    echo "ERROR: Passwords do not match!"
-    exit 1
+if [ -z "$KEY_PASSWORD" ]; then
+    KEY_PASSWORD="$KEYSTORE_PASSWORD"
+    echo "Using same password for key as keystore."
+else
+    read -sp "Confirm key password: " KEY_PASSWORD_CONFIRM
+    echo ""
+    if [ "$KEY_PASSWORD" != "$KEY_PASSWORD_CONFIRM" ]; then
+        echo "ERROR: Passwords do not match!"
+        exit 1
+    fi
 fi
 
 echo ""

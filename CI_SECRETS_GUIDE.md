@@ -56,7 +56,7 @@ keytool -genkey -v -keystore signingkey.jks -keyalg RSA -keysize 2048 -validity 
 You'll be prompted to:
 - Create a keystore password (save this as **KEY_STORE_PASSWORD**)
 - Enter your personal information (CN, OU, O, L, ST, C)
-- Create a key password (save this as **KEY_PASSWORD**)
+- **Note**: By default, `keytool` uses the same password for both the keystore and the key. You'll only be prompted once for a password, which becomes both **KEY_STORE_PASSWORD** and **KEY_PASSWORD**.
 - The alias you specify is your **ALIAS**
 
 #### Step 2: Convert keystore to base64
@@ -81,7 +81,7 @@ The output is your **SIGNING_KEY** secret.
 - **SIGNING_KEY**: The base64 output from step 2
 - **ALIAS**: The alias you used in the keytool command
 - **KEY_STORE_PASSWORD**: The keystore password you set
-- **KEY_PASSWORD**: The key password you set
+- **KEY_PASSWORD**: The same password you set for the keystore (unless you explicitly set a different one)
 
 ### Generating BOT_PAT (Personal Access Token)
 
@@ -190,8 +190,9 @@ After adding the secrets, you can test them by:
 - Ensure there are no extra spaces or newlines in the secret value
 
 ### Build fails with "key password was incorrect"
-- Verify `KEY_PASSWORD` matches the key password from keystore creation
+- Verify `KEY_PASSWORD` matches the key password from keystore creation (usually the same as KEY_STORE_PASSWORD)
 - Confirm the `ALIAS` matches exactly (case-sensitive)
+- If you only entered one password during keystore creation, use that same password for both KEY_STORE_PASSWORD and KEY_PASSWORD
 
 ### Publishing fails
 - Ensure `BOT_PAT` has the correct permissions

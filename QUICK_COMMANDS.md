@@ -24,7 +24,8 @@ This interactive script will:
 ### 1. Generate Android Keystore and Base64 Encoding
 
 ```bash
-# Step 1: Generate keystore (you'll be prompted for passwords and info)
+# Step 1: Generate keystore (you'll be prompted for a password and info)
+# Note: By default, the same password is used for both keystore and key
 keytool -genkey -v \
   -keystore signingkey.jks \
   -keyalg RSA \
@@ -47,7 +48,7 @@ base64 -i signingkey.jks -o SIGNING_KEY.txt
 - `SIGNING_KEY` = content of `SIGNING_KEY.txt`
 - `ALIAS` = the alias you specified (e.g., "my-release-key")
 - `KEY_STORE_PASSWORD` = keystore password you entered
-- `KEY_PASSWORD` = key password you entered
+- `KEY_PASSWORD` = same as keystore password (unless explicitly set differently)
 
 ### 2. Generate Codeberg SSH Key (Optional)
 
