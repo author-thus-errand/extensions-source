@@ -70,7 +70,8 @@ private fun ChapterDto.toSChapter(mangaId: Int) = SChapter.create().apply {
     }.getOrDefault(0L)
 }
 
-fun ChapterDetailsDto.toPageList(baseUrl: String): List<Page> {
+fun ChapterDetailsDto.toPageList(): List<Page> {
+    val baseUrl = detail.server ?: "https://s1.rawuwu.com"
     val document = Jsoup.parseBodyFragment(detail.content!!, baseUrl)
 
     return document.select("div.chapter-img canvas").mapIndexed { i, it ->

@@ -26,8 +26,6 @@ class Rawdevartart : HttpSource() {
 
     override val baseUrl = "https://rawdevart.art"
 
-    private val pageUrl = "https://s1.rawuwu.com"
-
     override val supportsLatest = true
 
     override fun headersBuilder() = super.headersBuilder()
@@ -101,7 +99,7 @@ class Rawdevartart : HttpSource() {
     override fun pageListParse(response: Response): List<Page> {
         val data = response.parseAs<ChapterDetailsDto>()
 
-        return data.toPageList(pageUrl)
+        return data.toPageList()
     }
 
     override fun imageUrlParse(response: Response) = throw UnsupportedOperationException()
