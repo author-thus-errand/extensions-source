@@ -127,15 +127,22 @@ Then:
 
 ## Adding Secrets to GitHub Repository
 
+**Important**: Add secrets as **Repository secrets**, NOT Environment secrets. The workflows in this repository access secrets at the repository level.
+
 1. Go to your GitHub repository
 2. Click on **Settings**
 3. Navigate to **Secrets and variables** → **Actions**
-4. Click **New repository secret**
-5. Add each secret:
+4. Under the **Secrets** tab, you'll see two sections:
+   - **Repository secrets** ← Use this one
+   - **Environment secrets** ← Do NOT use this
+5. Click **New repository secret** (in the Repository secrets section)
+6. Add each secret:
    - Name: The secret name (e.g., `SIGNING_KEY`)
    - Value: The secret value
-6. Click **Add secret**
-7. Repeat for all required secrets
+7. Click **Add secret**
+8. Repeat for all required secrets
+
+**Note**: If you accidentally added secrets to an environment instead of the repository, delete them from the environment and re-add them as repository secrets.
 
 ## Which Secrets Are Mandatory?
 

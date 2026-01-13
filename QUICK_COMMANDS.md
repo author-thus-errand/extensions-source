@@ -134,10 +134,13 @@ cd ..
 
 Once you have generated all the values:
 
+**⚠️ IMPORTANT**: Add these as **Repository secrets**, NOT Environment secrets!
+
 1. Go to your GitHub repository
 2. Click **Settings** → **Secrets and variables** → **Actions**
-3. Click **New repository secret**
-4. Add each secret:
+3. Make sure you're in the **Repository secrets** section (NOT Environment secrets)
+4. Click **New repository secret**
+5. Add each secret:
    - Name: `SIGNING_KEY` | Value: Content from `SIGNING_KEY.txt`
    - Name: `ALIAS` | Value: `my-release-key` (or your alias)
    - Name: `KEY_STORE_PASSWORD` | Value: Your keystore password
@@ -145,6 +148,8 @@ Once you have generated all the values:
    - Name: `BOT_PAT` | Value: Token from GitHub (optional)
    - Name: `CODEBERG_SSH` | Value: Content from `codeberg_deploy_key` (optional)
    - Name: `MEMBER_TOKEN` | Value: Token from GitHub (optional)
+
+If you added them to an environment by mistake, delete them and re-add as repository secrets.
 
 ## What You Need
 
