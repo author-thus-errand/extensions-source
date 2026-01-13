@@ -10,4 +10,5 @@ data class ChapterDto(
     @SerialName("chapter_number") val number: Float,
     @SerialName("chapter_date_published") val datePublished: String,
     @SerialName("chapter_content") val content: String? = null,
+    @SerialName("server") val server: String? = null,
 )
