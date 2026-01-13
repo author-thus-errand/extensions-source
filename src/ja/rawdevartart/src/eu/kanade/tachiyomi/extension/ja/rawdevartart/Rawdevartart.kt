@@ -62,7 +62,6 @@ class Rawdevartart : HttpSource() {
             if (query.isNotEmpty()) {
                 addPathSegment("search")
                 addQueryParameter("query", query)
-
                 return@apply
             }
 
