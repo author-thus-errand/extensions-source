@@ -110,6 +110,25 @@ class Rawdevartart : HttpSource() {
         GenreFilter(genres),
     )
 
+    // Convert API URLs to web URLs for WebView
+    override fun getMangaUrl(manga: SManga): String {
+        // API URL format: /spa/manga/{id}
+        // Web URL format: /g/{id}
+        val mangaId = manga.url.substringAfterLast("/")
+        return "$baseUrl/g/$mangaId"
+    }
+
+    override fun getChapterUrl(chapter: SChapter): String {
+        // API URL format: /spa/manga/{mangaId}/{chapterId}
+        // Web URL format: /g/{mangaId}/{chapterId}
+        val parts = chapter.url.substringAfter("/spa/manga/").split("/")
+        return if (parts.size >= 2) {
+            "$baseUrl/g/${parts[0]}/${parts[1]}"
+        } else {
+            "$baseUrl${chapter.url}"
+        }
+    }
+
     private inline fun <reified T> Response.parseAs(): T =
         json.decodeFromString(body.string())
 }

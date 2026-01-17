@@ -54,7 +54,8 @@ fun MangaDetailsDto.toSManga() = SManga.create().apply {
 fun MangaDetailsDto.toSChapterList() = chapters.map { it.toSChapter(detail.id) }
 
 private fun ChapterDto.toSChapter(mangaId: Int) = SChapter.create().apply {
-    url = "/spa/manga/$mangaId/$number"
+    // Store as API URL for fetching, but use chapter_id for web URL construction
+    url = "/spa/manga/$mangaId/$id"
     name = buildString {
         append("Chapter ")
         append(formatChapterNumber(number))
