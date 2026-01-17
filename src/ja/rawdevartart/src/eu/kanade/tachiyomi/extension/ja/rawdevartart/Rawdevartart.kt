@@ -104,6 +104,18 @@ class Rawdevartart : HttpSource() {
 
     override fun imageUrlParse(response: Response) = throw UnsupportedOperationException()
 
+    override fun getMangaUrl(manga: SManga): String {
+        val mangaId = manga.url.substringAfterLast("/")
+        return "$baseUrl/g/ne$mangaId"
+    }
+
+    override fun getChapterUrl(chapter: SChapter): String {
+        val parts = chapter.url.split("/")
+        val mangaId = parts[parts.size - 2]
+        val chapterNumber = parts.last()
+        return "$baseUrl/read/ne$mangaId/chapter-$chapterNumber"
+    }
+
     override fun getFilterList() = FilterList(
         Filter.Header("Filters are ignored when using text search."),
         StatusFilter(),
