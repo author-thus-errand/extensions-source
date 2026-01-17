@@ -15,7 +15,7 @@ import java.text.DecimalFormatSymbols
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-private val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.US)
+private val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX", Locale.US)
 
 fun PaginatedMangaList.toMangasPage(): MangasPage {
     val manga = mangaList.map { it.toSManga() }
@@ -71,11 +71,11 @@ private fun ChapterDto.toSChapter(mangaId: Int) = SChapter.create().apply {
 }
 
 fun ChapterDetailsDto.toPageList(): List<Page> {
-    val baseUrl = detail.server ?: "https://s1.rawuwu.com"
+    val baseUrl = detail.server ?: "https://s1.rawuwu.net"
     val document = Jsoup.parseBodyFragment(detail.content!!, baseUrl)
 
-    return document.select("div.chapter-img canvas").mapIndexed { i, it ->
-        Page(i, imageUrl = it.absUrl("data-srcset"))
+    return document.select("img.lazy").mapIndexed { i, it ->
+        Page(i, imageUrl = it.absUrl("data-src"))
     }
 }
 

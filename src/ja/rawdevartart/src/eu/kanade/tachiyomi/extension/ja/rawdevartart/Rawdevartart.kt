@@ -56,23 +56,24 @@ class Rawdevartart : HttpSource() {
     override fun latestUpdatesParse(response: Response) = searchMangaParse(response)
 
     override fun searchMangaRequest(page: Int, query: String, filters: FilterList): Request {
-        val url = "$baseUrl/spa".toHttpUrl().newBuilder().apply {
-            addQueryParameter("page", page.toString())
-
-            if (query.isNotEmpty()) {
-                addPathSegment("search")
+        val url = if (query.isNotEmpty()) {
+            "$baseUrl/spa/search".toHttpUrl().newBuilder().apply {
                 addQueryParameter("query", query)
-                return@apply
-            }
+                addQueryParameter("page", page.toString())
+            }.build()
+        } else {
+            "$baseUrl/spa".toHttpUrl().newBuilder().apply {
+                addQueryParameter("page", page.toString())
 
-            (if (filters.isEmpty()) getFilterList() else filters).forEach { f ->
-                when (f) {
-                    is UriFilter -> f.addToUri(this)
-                    is GenreFilter -> addPathSegments(f.values[f.state].path)
-                    else -> {}
+                (if (filters.isEmpty()) getFilterList() else filters).forEach { f ->
+                    when (f) {
+                        is UriFilter -> f.addToUri(this)
+                        is GenreFilter -> addPathSegments(f.values[f.state].path)
+                        else -> {}
+                    }
                 }
-            }
-        }.build()
+            }.build()
+        }
 
         return GET(url, headers)
     }
