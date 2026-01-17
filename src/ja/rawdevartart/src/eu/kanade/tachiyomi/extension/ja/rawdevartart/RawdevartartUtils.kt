@@ -71,8 +71,8 @@ private fun ChapterDto.toSChapter(mangaId: Int) = SChapter.create().apply {
 }
 
 fun ChapterDetailsDto.toPageList(): List<Page> {
-    val baseUrl = detail.server ?: "https://s1.rawuwu.net"
-    val document = Jsoup.parseBodyFragment(detail.content!!, baseUrl)
+    val server = detail.server ?: throw Exception("Server URL not provided")
+    val document = Jsoup.parseBodyFragment(detail.content!!, server)
 
     return document.select("img.lazy").mapIndexed { i, it ->
         Page(i, imageUrl = it.absUrl("data-src"))
